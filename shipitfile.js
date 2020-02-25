@@ -18,7 +18,7 @@ module.exports = shipit => {
       //workspace: '/tmp/shipit-folder-name',
       //updateSubmodules: true,
       deployTo: '/var/www/frontend-deploy',
-      repositoryUrl: 'git@bitbucket.org:imsonujangra/loemi-frontend.git',
+      repositoryUrl: 'git@bitbucket.org:imsonujangra/frontend.git',
       // shared: {
       //   dirs: ['node_modules'],
       //   overwrite: true,
@@ -38,7 +38,7 @@ module.exports = shipit => {
 
   shipit.blTask('submodules', async () => {
     shipit.log('Starting...');
-    await shipit.local(`cd ${shipit.workspace} && git clone git@bitbucket.org:imsonujangra/girnarsoft-react-common.git`)
+    await shipit.local(`cd ${shipit.workspace} && git clone git@bitbucket.org:imsonujangra/react-common.git`)
   });
 
   shipit.blTask('npm:install', async () => {
@@ -46,7 +46,7 @@ module.exports = shipit => {
   })
 
   shipit.blTask('server:start', async () => {
-    const command = 'chmod +x loemi-frontend.sh && ./loemi-frontend.sh'
+    const command = 'chmod +x frontend.sh && ./frontend.sh'
     await shipit.remote(`cd ${shipit.currentPath} && ${command}`)
   })
 
@@ -57,7 +57,7 @@ module.exports = shipit => {
 
   shipit.blTask('server:copyConfig', async () => {
       shipit.log('copying server file :: >>>>> ');
-      await shipit.remote(`cp -r /var/www/common_shared/loemi-frontend.sh ${shipit.releasePath}/`);
+      await shipit.remote(`cp -r /var/www/common_shared/frontend.sh ${shipit.releasePath}/`);
   })
 
   shipit.on('updated', () => {
@@ -84,7 +84,7 @@ module.exports = shipit => {
       let pack = {
         "name":"frontend-deploy",
         "version":"1.0.1",
-        "url":"https://bitbucket.org/imsonujangra/loemi-frontend/commits/"
+        "url":"https://bitbucket.org/imsonujangra/frontend/commits/"
       };
       var githubLink = pack.url.replace('/issues',`/commit/${res.stdout}`).trim();
       slack.webhook({
